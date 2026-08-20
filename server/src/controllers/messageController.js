@@ -38,7 +38,9 @@ export const GetMessages = async (req, res) => {
         { senderId: currentUser._id, receiverId: friendId },
         { senderId: friendId, receiverId: currentUser._id },
       ],
-    }).sort({ createdAt: 1 });
+    }).sort({ createdAt: 1 }).select("-_id -__v");
+
+
     res.status(200).json({ data: messages });
   } catch (error) {
     console.log(error.message);

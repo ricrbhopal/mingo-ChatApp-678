@@ -91,7 +91,7 @@ const Chatting = ({ selectedFriend, currentUser }) => {
     //   clearInterval(interval);
     // };
 
-    if (receiver) {
+    if (selectedFriend) {
       socketAPI.on("receive", handleReceiveMessage);
     }
 

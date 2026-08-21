@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { chatData, userData } from "../../assets/dummy";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../config/api";
@@ -6,12 +6,21 @@ import socketAPI from "../../config/webSocket";
 
 const Chatting = ({ selectedFriend, currentUser }) => {
   const { user } = useAuth();
+  const bottomRef = useRef(null);
   const [filteredChatData, setFilteredChatData] = useState([]);
   const [receiver, setReceiver] = useState("");
   const [sender, setSender] = useState("");
   const [message, setMessage] = useState("");
   //console.log(selectedFriend);
   //console.log(currentUser);
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [filteredChatData]);
 
   const fetchChatData = async () => {
     try {
@@ -134,6 +143,7 @@ const Chatting = ({ selectedFriend, currentUser }) => {
               <div className={`chat-bubble `}>{chat.message}</div>
             </div>
           ))}
+          <div ref={bottomRef}></div>
         </div>
         <div className="h-full px-3 py-2 input flex gap-3">
           <button>😊</button>

@@ -111,52 +111,73 @@ const Chatting = ({ selectedFriend, currentUser }) => {
 
   console.log(filteredChatData);
   return (
-    <>
-      <div className="bg-base-200 p-4">
-        <div>{receiver?.fullName || "no friend Selected"}</div>
+    <div className="flex flex-col h-full">
+      {/* Chat Header */}
+      <div className="flex items-center gap-3 px-5 py-3 bg-base-100 border-b border-base-300 shadow-sm shrink-0">
+        <div className="avatar avatar-placeholder">
+          <div className="size-10 rounded-full bg-primary text-primary-content font-bold text-sm flex items-center justify-center">
+            {(receiver?.fullName?.[0] || "?").toUpperCase()}
+          </div>
+        </div>
+        <div>
+          <p className="font-semibold text-base-content">{receiver?.fullName || "Select a friend"}</p>
+          <p className="text-xs text-success flex items-center gap-1">
+            <span className="size-1.5 rounded-full bg-success inline-block" />
+            Online
+          </p>
+        </div>
       </div>
 
-      <div className="p-3 flex flex-col gap-3">
-        <div className="h-[70vh] w-full card p-3 overflow-y-auto bg-accent/20">
-          {filteredChatData.map((chat, idx) => (
-            <div
-              className={`chat ${chat.senderId !== sender._id ? "chat-receiver" : "chat-sender"}`}
-            >
-              <div className="chat-avatar avatar">
-                {/* <div className="size-10 rounded-full">
-                  <img
-                    src={
-                      chat.senderId !== sender._id
-                        ? receiver.photo
-                        : sender.photo
-                    }
-                    alt="avatar"
-                  />
-                </div> */}
-              </div>
-              <div className="chat-header text-base-content">
-                {chat.senderId !== sender._id
-                  ? receiver.fullName
-                  : sender.fullName}
-                <time className="text-base-content/50">{chat.timestamp}</time>
-              </div>
-              <div className={`chat-bubble `}>{chat.message}</div>
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-1">
+        {filteredChatData.map((chat, idx) => (
+          <div
+            key={idx}
+            className={`chat ${chat.senderId !== sender._id ? "chat-start" : "chat-end"}`}
+          >
+            <div className="chat-header text-xs text-base-content/40 mb-0.5">
+              {chat.senderId !== sender._id ? receiver?.fullName : "You"}
             </div>
-          ))}
-          <div ref={bottomRef}></div>
-        </div>
-        <div className="h-full px-3 py-2 input flex gap-3">
-          <button>😊</button>
-          <textarea
-            type="text"
-            className="w-full outline-0"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
-          ></textarea>
-          <button onClick={handleMessageSendSocket}>Send</button>
-        </div>
+            <div className={`chat-bubble text-sm ${chat.senderId === sender._id ? "chat-bubble-primary" : ""}`}>
+              {chat.message}
+            </div>
+            <div className="chat-footer text-xs text-base-content/30 mt-0.5">
+              {chat.createdAt
+                ? new Date(chat.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                : ""}
+            </div>
+          </div>
+        ))}
+        <div ref={bottomRef} />
       </div>
-    </>
+
+      {/* Message Input */}
+      <div className="px-4 py-3 bg-base-100 border-t border-base-300 flex items-end gap-2 shrink-0">
+        <button className="btn btn-ghost btn-sm btn-circle text-xl shrink-0">😊</button>
+        <textarea
+          className="textarea textarea-bordered flex-1 resize-none text-sm min-h-[42px] max-h-32 leading-relaxed"
+          placeholder="Type a message... (Enter to send)"
+          onChange={(e) => setMessage(e.target.value)}
+          value={message}
+          rows={1}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleMessageSendSocket();
+            }
+          }}
+        />
+        <button
+          onClick={handleMessageSendSocket}
+          className="btn btn-primary btn-circle shrink-0"
+          disabled={!message.trim()}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
+            <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 };
 

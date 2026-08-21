@@ -45,29 +45,56 @@ const Chat = () => {
   return (
     <>
       {isLogin && (
-        <div className="flex gap-2">
-          <div className="w-3/17 bg-base-200">
-            <h1>Recent Chats</h1>
+        <div className="flex h-[calc(100vh-64px)] overflow-hidden">
+          {/* Sidebar */}
+          <div className="w-72 shrink-0 bg-base-100 border-r border-base-300 flex flex-col">
+            <div className="px-4 py-3 border-b border-base-300">
+              <h2 className="text-lg font-bold text-base-content">Chats</h2>
+              <p className="text-xs text-base-content/40">{recentUser.length} contacts</p>
+            </div>
 
-            {recentUser.length > 0 &&
-              recentUser.map((friend, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => { setSelectedFriend(friend); setIsOpenChat(true); }}
-                  className="cursor-pointer"
-                >
-                  {friend.fullName}
+            <div className="overflow-y-auto flex-1">
+              {recentUser.length > 0 ? (
+                recentUser.map((friend, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => { setSelectedFriend(friend); setIsOpenChat(true); }}
+                    className={`flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-base-200 transition-colors ${
+                      selectedFriend?._id === friend._id
+                        ? "bg-primary/10 border-l-4 border-primary"
+                        : "border-l-4 border-transparent"
+                    }`}
+                  >
+                    <div className="avatar avatar-placeholder shrink-0">
+                      <div className="size-10 rounded-full bg-primary text-primary-content font-bold text-sm flex items-center justify-center">
+                        {(friend.fullName?.[0] || "U").toUpperCase()}
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-sm text-base-content truncate">{friend.fullName}</p>
+                      <p className="text-xs text-base-content/40 truncate">{friend.email}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center h-48 text-base-content/30">
+                  <span className="text-5xl">👥</span>
+                  <p className="mt-3 text-sm">No contacts found</p>
                 </div>
-              ))}
+              )}
+            </div>
           </div>
-          <div className="w-14/17">
+
+          {/* Chat area */}
+          <div className="flex-1 flex flex-col bg-base-200 overflow-hidden">
             {selectedFriend ? (
-              <Chatting
-                selectedFriend={selectedFriend}
-                currentUser={user}
-              />
+              <Chatting selectedFriend={selectedFriend} currentUser={user} />
             ) : (
-              <div>Select a Friend to start chat</div>
+              <div className="flex flex-col items-center justify-center h-full text-base-content/30 gap-3">
+                <span className="text-7xl">💬</span>
+                <p className="text-xl font-semibold">Select a conversation</p>
+                <p className="text-sm">Pick a contact from the left to start chatting</p>
+              </div>
             )}
           </div>
         </div>

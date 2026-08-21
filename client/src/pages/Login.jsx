@@ -70,95 +70,93 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-base-200 px-4">
       <div className="w-full max-w-md">
+        {/* Branding */}
+        <div className="text-center mb-6">
+          <span className="text-6xl">💬</span>
+          <h2 className="text-3xl font-extrabold mt-3 text-base-content">Welcome back</h2>
+          <p className="text-base-content/50 mt-1">Sign in to your Mingo account</p>
+        </div>
+
         <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title text-3xl justify-center text-primary">
-              Login
-            </h2>
-            <p className="text-center text-base-content/70 mb-6">
-              Welcome back 👋
-            </p>
-
+          <div className="card-body gap-5">
             <form onSubmit={handleSubmit} onReset={handleClearForm} className="space-y-4">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
-                disabled={loading}
-                required
-                className="input input-bordered w-full"
-              />
-
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                disabled={loading}
-                required
-                className="input input-bordered w-full"
-              />
-
-              <div className="flex gap-3 pt-4">
-                <button
-                  type="reset"
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-base-content/70">Email address</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
                   disabled={loading}
-                  className="btn btn-secondary btn-outline flex-1"
-                >
+                  required
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-base-content/70">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={loading}
+                  required
+                  className="input input-bordered w-full"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button type="reset" disabled={loading} className="btn btn-ghost flex-1">
                   Clear
                 </button>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn btn-primary flex-1"
-                >
-                  {loading ? "Logging in..." : "Login"}
+                <button type="submit" disabled={loading} className="btn btn-primary flex-1">
+                  {loading ? <span className="loading loading-spinner loading-sm" /> : "Login"}
                 </button>
               </div>
             </form>
 
-            {/* Google Login button */}
-            <div className="mt-4">
-              {error ? (
-                <button
-                  className="btn btn-outline btn-error font-sans flex items-center justify-center gap-2 w-full"
-                  disabled
-                >
-                  <FcGoogle className="text-xl" />
-                  {error}
-                </button>
-              ) : (
-                <button
-                  onClick={handleGoogleLogin}
-                  className="btn btn-outline font-sans flex items-center justify-center gap-2 w-full"
-                  disabled={!isInitialized || isLoading || loading}
-                >
-                  <FcGoogle className="text-xl" />
-                  {isLoading
-                    ? "Loading..."
-                    : isInitialized
-                      ? "Continue with Google"
-                      : "Google Auth Error"}
-                </button>
-              )}
-            </div>
+            <div className="divider text-base-content/40 text-xs my-0">OR</div>
 
-            <p className="text-center text-sm text-base-content/60 mt-4">
+            {/* Google Login */}
+            {error ? (
+              <button
+                className="btn btn-outline btn-error w-full gap-2"
+                disabled
+              >
+                <FcGoogle className="text-xl" />
+                {error}
+              </button>
+            ) : (
+              <button
+                onClick={handleGoogleLogin}
+                className="btn btn-outline w-full gap-2"
+                disabled={!isInitialized || isLoading || loading}
+              >
+                <FcGoogle className="text-xl" />
+                {isLoading
+                  ? <span className="loading loading-spinner loading-sm" />
+                  : isInitialized
+                    ? "Continue with Google"
+                    : "Google Auth Error"}
+              </button>
+            )}
+
+            <p className="text-center text-sm text-base-content/50">
               No account?{" "}
-              <Link to="/register" className="text-primary font-semibold">
+              <Link to="/register" className="text-primary font-semibold hover:underline">
                 Register here
               </Link>
             </p>
           </div>
         </div>
 
-        <p className="text-center text-sm text-base-content/60 mt-6">
-          Your data is safe with us 🔐
+        <p className="text-center text-xs text-base-content/30 mt-5">
+          🔐 Your data is encrypted and secure
         </p>
       </div>
     </div>

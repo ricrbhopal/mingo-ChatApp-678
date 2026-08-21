@@ -21,45 +21,51 @@ const SiteHeader = () => {
   };
 
   return (
-    <div className="bg-primary p-2 flex items-center justify-between">
-      <h1
-        className="text-3xl font-bold text-primary-content cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        Mingo Chat App
-      </h1>
+    <div className="navbar bg-primary text-primary-content shadow-lg px-4 sticky top-0 z-50">
+      <div className="navbar-start">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <span className="text-2xl">💬</span>
+          <span className="text-xl font-extrabold tracking-tight">Mingo</span>
+        </div>
+      </div>
 
-      <div className="flex items-center gap-3">
+      <div className="navbar-end gap-2">
         {isLogin ? (
           <div
-            className="flex items-center gap-3 cursor-pointer p-1 border border-primary-content rounded-md transition hover:opacity-80"
+            className="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-lg hover:bg-primary-content/10 transition"
             onClick={() => navigate("/dashboard")}
           >
-            <span className="text-primary-content text-lg font-semibold text-nowrap">
-              Welcome, {user?.fullName?.split(" ")[0] || user?.email?.split("@")[0]}
+            <div className="avatar avatar-placeholder">
+              <div className="size-8 rounded-full bg-primary-content/20 text-primary-content font-bold text-sm flex items-center justify-center">
+                {(user?.fullName?.[0] || user?.email?.[0] || "U").toUpperCase()}
+              </div>
+            </div>
+            <span className="font-semibold text-sm hidden sm:block">
+              {user?.fullName?.split(" ")[0] || user?.email?.split("@")[0]}
             </span>
           </div>
         ) : (
-          <>
+          <div className="flex gap-2">
             <button
-              className="btn btn-sm btn-outline btn-primary-content text-primary-content border-primary-content"
+              className="btn btn-sm btn-ghost text-primary-content border border-primary-content/40"
               onClick={() => navigate("/login")}
             >
               Login
             </button>
             <button
-              className="btn btn-sm btn-outline btn-primary-content text-primary-content border-primary-content"
+              className="btn btn-sm bg-primary-content text-primary font-semibold hover:opacity-90"
               onClick={() => navigate("/register")}
             >
               Register
             </button>
-          </>
+          </div>
         )}
 
         <select
-          name="theme"
-          id="theme"
-          className="select select-bordered w-fit"
+          className="select select-sm bg-primary/60 text-primary-content border-primary-content/30 w-fit"
           value={selectedTheme}
           onChange={handleThemeChange}
         >

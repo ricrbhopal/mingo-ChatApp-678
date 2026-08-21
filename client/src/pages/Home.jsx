@@ -5,41 +5,62 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <>
-      <div className="flex items-center justify-center  h-[90vh]">
-        <div className="bg-base-200 p-2 h-[80vh] w-6xl flex  flex-col items-center justify-evenly">
-          <div className=" text-3xl font-bold">welcome to My Website</div>
+    <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center bg-base-200 px-4 py-12 text-center">
+      {/* Hero */}
+      <motion.div
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mb-8"
+      >
+        <span className="text-7xl">💬</span>
+        <h1 className="text-5xl font-extrabold mt-4 text-base-content">
+          Welcome to{" "}
+          <span className="text-primary">Mingo</span>
+        </h1>
+        <p className="text-base-content/50 mt-3 text-lg max-w-md mx-auto">
+          Connect instantly. Chat securely. Stay together.
+        </p>
+      </motion.div>
 
-          <motion.button
-            className="btn btn-primary btn-gradient"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            onClick={() => navigate("/login")}
-          >
-            Login to Chat
-          </motion.button>
-          <motion.button
-            className="btn btn-primary btn-gradient"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            onClick={() => navigate("/chat")}
-          >
-            Chat Page
-          </motion.button>
-          <motion.button
-            className="btn btn-primary btn-gradient"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            onClick={() => navigate("/contact")}
-          >
-            contact us
-          </motion.button>
-        </div>
-      </div>
-    </>
+      {/* CTA Buttons */}
+      <motion.div
+        className="flex flex-wrap gap-4 justify-center mb-16"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
+      >
+        <button className="btn btn-primary btn-lg" onClick={() => navigate("/login")}>
+          Get Started
+        </button>
+        <button className="btn btn-outline btn-lg" onClick={() => navigate("/chat")}>
+          Open Chat
+        </button>
+        <button className="btn btn-ghost btn-lg" onClick={() => navigate("/contact")}>
+          Contact Us
+        </button>
+      </motion.div>
+
+      {/* Feature Cards */}
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl w-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+      >
+        {[
+          { icon: "⚡", title: "Real-time", desc: "Instant delivery with WebSocket technology" },
+          { icon: "🔒", title: "Secure", desc: "Google OAuth & JWT protected authentication" },
+          { icon: "🎨", title: "Themeable", desc: "Choose from 8 beautiful built-in themes" },
+        ].map(({ icon, title, desc }) => (
+          <div key={title} className="card bg-base-100 shadow-md p-6 text-left hover:shadow-lg transition-shadow">
+            <div className="text-4xl mb-3">{icon}</div>
+            <h3 className="font-bold text-lg text-base-content">{title}</h3>
+            <p className="text-base-content/50 text-sm mt-1">{desc}</p>
+          </div>
+        ))}
+      </motion.div>
+    </div>
   );
 };
 

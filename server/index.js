@@ -28,11 +28,11 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 // Routes
-app.use("/auth", AuthRouter);
-app.use("/user", UserRouter);
+app.use("/api/auth", AuthRouter);
+app.use("/api/user", UserRouter);
 
 // Health check
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.status(200).json({ message: "Mingo Chat 678 API is running 🚀" });
 });
 

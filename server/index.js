@@ -33,7 +33,7 @@ app.use("/user", UserRouter);
 
 // Health check
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "Mingo Chat API is running 🚀" });
+  res.status(200).json({ message: "Mingo Chat 678 API is running 🚀" });
 });
 
 // Global error handler

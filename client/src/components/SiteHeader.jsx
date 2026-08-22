@@ -39,7 +39,7 @@ const SiteHeader = () => {
             onClick={() => navigate("/dashboard")}
           >
             <div className="avatar avatar-placeholder">
-              <div className="size-8 rounded-full bg-primary-content/20 text-primary-content font-bold text-sm flex items-center justify-center">
+              <div className="size-8 rounded-full bg-primary-content/20 text-primary font-bold text-sm flex items-center justify-center">
                 {(user?.fullName?.[0] || user?.email?.[0] || "U").toUpperCase()}
               </div>
             </div>
@@ -50,7 +50,7 @@ const SiteHeader = () => {
         ) : (
           <div className="flex gap-2">
             <button
-              className="btn btn-sm btn-ghost text-primary-content border border-primary-content/40"
+              className="btn btn-sm btn-outline text-primary-content border border-primary-content/40"
               onClick={() => navigate("/login")}
             >
               Login

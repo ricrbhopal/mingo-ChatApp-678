@@ -33,9 +33,6 @@ const Home = () => {
         <button className="btn btn-primary btn-lg" onClick={() => navigate("/login")}>
           Get Started
         </button>
-        <button className="btn btn-outline btn-lg" onClick={() => navigate("/chat")}>
-          Open Chat
-        </button>
         <button className="btn btn-ghost btn-lg" onClick={() => navigate("/contact")}>
           Contact Us
         </button>

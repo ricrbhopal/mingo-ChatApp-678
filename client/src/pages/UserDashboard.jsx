@@ -246,8 +246,4 @@ const UserDashboard = () => {
 };
 
 export default UserDashboard;
-    </div>
-  );
-};
-
-export default UserDashboard;
+    
